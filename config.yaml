@@ -1,0 +1,122 @@
+# Sentiment Analysis Configuration
+
+# Model Configuration
+model:
+  name: "distilbert-base-uncased-finetuned-sst-2-english"
+  fallback: "vader"
+  device: "auto"  # auto, cpu, cuda
+  cache_dir: null  # Optional: specify cache directory for models
+
+# Sentiment Analysis Settings
+sentiment:
+  positive_threshold: 0.6
+  negative_threshold: 0.6
+  neutral_default: true
+  batch_size: 32
+
+# Priority Scoring Configuration
+priority:
+  weights:
+    negative: 9
+    neutral: 5
+    positive: 2
+  
+  urgent_keywords:
+    - "urgent"
+    - "critical"
+    - "broken"
+    - "bug"
+    - "issue"
+    - "problem"
+    - "error"
+    - "crash"
+    - "down"
+    - "not working"
+    - "failed"
+    - "failure"
+    - "emergency"
+    - "asap"
+    - "immediately"
+    - "severe"
+    - "serious"
+    - "major"
+    - "blocker"
+    - "stuck"
+  
+  keyword_boost: 2
+  length_threshold: 200
+  length_boost: 1
+  confidence_multiplier: 1.0
+
+# Data Source Configuration
+data_sources:
+  csv:
+    max_file_size_mb: 50
+    supported_formats:
+      - ".csv"
+      - ".xlsx"
+      - ".xls"
+    encoding: "utf-8"
+  
+  api:
+    timeout_seconds: 30
+    max_retries: 3
+    retry_delay: 2
+  
+  sql:
+    pool_size: 5
+    max_overflow: 10
+    pool_timeout: 30
+  
+  mongodb:
+    max_pool_size: 10
+    timeout_ms: 5000
+
+# Dashboard Configuration
+dashboard:
+  title: "Sentiment Analysis for User Feedback Triage"
+  page_icon: "📊"
+  layout: "wide"
+  rows_per_page: 25
+  chart_theme: "plotly_white"
+  auto_refresh_minutes: 5
+  cache_ttl_minutes: 10
+
+# Data Processing Configuration
+processing:
+  remove_urls: true
+  remove_emails: true
+  remove_special_chars: false
+  keep_punctuation: true
+  handle_missing: "drop"  # drop or fill
+  deduplicate: true
+  add_features: true
+
+# Visualization Configuration
+visualization:
+  color_scheme:
+    positive: "#28a745"
+    negative: "#dc3545"
+    neutral: "#6c757d"
+    high_priority: "#ff4444"
+    medium_priority: "#ffaa00"
+    low_priority: "#44ff44"
+  
+  chart_height: 400
+  show_confidence: true
+  show_word_clouds: true
+
+# Export Configuration
+export:
+  include_original_data: true
+  include_analysis_results: true
+  include_timestamp: true
+  date_format: "%Y-%m-%d %H:%M:%S"
+
+# Logging Configuration
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR, CRITICAL
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  file: null  # Optional: specify log file path
+
+# Made with Bob
